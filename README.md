@@ -1,2 +1,2 @@
-# dc-parks
-dc parks interactive
+# ri-tercentenary
+RI Tercentencary Map Application

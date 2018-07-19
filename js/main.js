@@ -296,7 +296,7 @@ var parkIcon = L.icon({
     iconUrl: "js/images/noun_Park.png",
 
     iconSize:     [35, 30], // size of the icon
-    iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location    
+    iconAnchor:   [17, 30], // point of the icon which will correspond to marker's location    
     popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
 });
 
@@ -370,8 +370,29 @@ $( document ).ready(function() {
       }, function(data) {
         console.log(data);
         refreshLayer();
-      });
+      }).done(function(jqXHR, textStatus,errorThrown) {
+          console.log("done", textStatus, errorThrown);
+          })
+          .fail(function(jqXHR, textStatus,errorThrown) {
+            console.log( "error", textStatus, errorThrown );
+          })
+          .always(function(jqXHR, textStatus,errorThrown) {
+            console.log( "complete", textStatus, errorThrown );
+          });
     };
+
+//  var jqxhr = $.getJSON( "example.json", function() {
+//  console.log( "success" );
+//})
+//  .done(function() {
+//    console.log( "second success" );
+//  })
+//  .fail(function() {
+//    console.log( "error" );
+//  })
+//  .always(function() {
+//    console.log( "complete" );
+//  });
 
     // Use the jQuery UI dialog to create a dialog and set options
     var dialog = $("#dialog").dialog({
