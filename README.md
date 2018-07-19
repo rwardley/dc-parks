@@ -1,2 +1,2 @@
-# ri-tercentenary
-RI Tercentencary Map Application
+# dc-parks
+DC Parks Finder Map Application
