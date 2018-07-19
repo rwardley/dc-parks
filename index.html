@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width">
+		<title>DC Parks Finder</title>
+
+		<!--put your external stylesheet links here-->
+        <script src="https://use.fontawesome.com/8ada6bb8b1.js"></script>
+		<link rel="stylesheet" href="lib/leaflet/leaflet.css">
+        <link rel="stylesheet" href="css/MarkerCluster.css">
+		<link rel="stylesheet" href="css/MarkerCluster.Default.css">
+<!--        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">-->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol/dist/L.Control.Locate.min.css" />
+        
+        <!-- style sheet for mapzen.js -->
+<!--        <link rel="stylesheet" href="https://mapzen.com/js/mapzen.standalone.css">-->
+		<link rel="stylesheet" href="css/style.css">
+        <link href="https://fonts.googleapis.com/css?family=Rubik" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+		<!--Added from DUSPViz-->
+<!--        <link rel="stylesheet" href="css/leaflet.css" />-->
+        <link rel="stylesheet" href="css/leaflet.draw.css" />
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+        <link rel="stylesheet" type="text/css" href="css/style.css">
+        <!-- -->
+     </head>
+    <body style="background-color:#fff;">
+    </body>
+
+	<body>
+        <!-- Navigation -->
+        <nav id="mainNav" class="navbar navbar-default navbar-custom navbar-fixed-top">
+            <h1>DC Parks Finder</h1>
+        </nav>
+        <div id="legend">
+             <input id="mapButtonCheckBox" type="checkbox" class="leaflet-control-layers-selector" checked="">
+            <p id="mapButtonText">Wards</p>
+        </div>
+        <div id="homeButton">
+            <i class="fa fa-home fa-2x" aria-hidden="true"></i>
+        </div>
+<!--
+        <div id="slider">
+            <p>Opacity</p>
+            <input id="slide" type="range" min="0" max="1" step="0.05" value="1">
+        </div>
+-->
+<!--************************************************************** -->         <!--<div id="wrapper">
+       <div id="map"></div>
+              <div id="controls">
+                <p>Click points for more information, or add your own.</br></p>
+                <input type="button" onclick="startEdits()" value="Click to Start Editing">
+                <input type="button" onclick="stopEdits()" value="Stop Your Editing Session"><br>
+              </div>
+        </div>-->
+        <div id = "contents">
+            <div id="map">
+                <div id="dialog" title="Point Information">
+                  <form>
+                    <fieldset>
+                      <label for="username">Park Name</label>
+                      <input type="text" name="username" id="username" placeholder="Enter Park Name" class="text ui-widget-content ui-corner-all">
+                      <label for="description">About this Park</label>
+                      <input type="text" name="description" id="description" placeholder="Description of park" class="text ui-widget-content ui-corner-all">
+                      <input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
+                    </fieldset>
+                  </form>
+                </div>
+            </div>
+            <div id="column-right">
+<!--                <h3 class="title" id="count">-->
+                <div id="parkFinderLogo" class="large-4 medium-4 columns">
+                <img src="data/dpr_Logo418x268_0.jpg" class="ParkFinderLogoImg">
+                </div>
+                <p>Welcome to the D.C. Parks Finder. Use this interactive map to explore the different types of parks located throughout the city and managed by the D.C. Department of Parks and Recreation. Pan and zoom around the map to explore all city parks, clicking on individual areas for more information. Or choose from the dropdowns below to filter the parks by a variety of categories. Have an idea for a future park that you'd like to create? You can drop a pin at that location under the 'Suggest a new Park' section!</p>
+                <br>
+                <br>
+                <h3><strong>Filter Parks by:</strong></h3>
+                <ul class="accordion" data-accordion>
+                    <li class="accordion-navigation">
+<!--                        <div id="panel1a" class="content">-->
+                            <form>
+                                <div class="row">
+                                   <div class="large-12 columns">
+                                        <h4>Ward:
+                                        <select id="filter-ward">
+<!--                                        <option value="1","2","3","4","5","6","7","8">All Wards</option>-->
+                                            <option value="all">All Wards</option>
+                                            <option value="1">Ward 1</option>
+                                            <option value="2">Ward 2</option>
+                                            <option value="3">Ward 3</option>
+                                            <option value="4">Ward 4</option>
+                                            <option value="5">Ward 5</option>
+                                            <option value="6">Ward 6</option>
+                                            <option value="7">Ward 7</option>
+                                            <option value="8">Ward 8</option>
+                                        </select>
+                                    </h4>
+                                    </div>
+                                </div>
+                              </form>
+<!--                          </div>-->
+                          <div id="panel1a" class="content">
+                            <form>
+                                <div class="row">
+                                    <div class="large-12 columns">
+                                        <h4>Size:
+                                        <select id="filter-size">
+                                            <option value="LARGE PARK">Large</option>
+                                            <option value="PARK">Medium</option>
+                                            <option value="SMALL PARK">Small</option>
+                                        </select>
+                                        </h4>
+                                    </div>
+                                </div>
+                              </form>
+                          </div>
+                          <div id="panel1a" class="content">
+                            <form>
+                                <div class="row">
+                                    <div class="large-12 columns">
+                                        <h4>Sports:
+                                        <select id="filter-sport">
+                                            <option value="D|DB|DBFT|DBP|DBS|DBST|DBT|DBTP|DF|DS|DST|DT">Baseball</option>
+                                            <option value="B|BS|BT|DB|DBFT|DBP|DBS|DBST|DBT">Basketball</option>
+                                            <option value="DBFT|DF">Football</option>
+                                            <option value="V">Volleyball</option>
+                                            <option value="{'primary':'DBP', 'secondary':'DBTP'}">Skate Park</option>
+                                            <option value="BT|DBFT|DBST|DBT|DBTP|DST|DT|T">Tennis</option>
+                                            <option value="BS|DBS|DBST|DS|DST|S">Soccer</option>
+                                        </select>
+                                    </h4>
+                                    </div>
+                                </div>
+                              </form>
+                          </div>
+                          <div id="panel1a" class="content">
+                            <form>
+                                <div class="row">
+                                    <div class="large-12 columns">
+                                        <h4>Facility Type:
+                                        <select id="filter-type">
+                                            <option value="AQUATIC CENTER">Aquatic Center</option>
+                                            <option value="POOL/SPRAY PARK">Pool or Spray Park</option>
+                                            <option value="REC CENTER GROUNDS">Recreation Center</option>
+                                        </select>
+                                    </h4>
+                                    </div>
+                                </div>
+                              </form>
+                          </div>
+                        </li>
+                    </ul>
+                <!--input
+                    option 'li' 'ul'-->
+            <span>
+                <button type="reset" value="Reset" onclick="reset()">Clear All Filters</button>
+            </span>
+            <br>
+            <br>
+            <br>
+                <h3><strong>Suggest a new Park!</strong></h3>
+            <p>Click points for more information, or add your own.</br></p>
+                <input type="button" onclick="startEdits()" value="Click to Start Editing">
+                <input type="button" onclick="stopEdits()" value="Stop Your Editing Session"><br>
+        </div>
+   
+		<!--you can also use this space for internal scripts or stylesheets;
+		place these within <script> or <style> tags-->
+
+		<!--put your external script links here-->
+		<script type="text/javascript" src="lib/jquery-3.1.1.min.js"></script>
+        <script type="text/javascript" src="lib/jquery-migrate-3.0.0.min.js"></script>
+		<script type="text/javascript" src="lib/leaflet/leaflet-src.js"></script>
+		<script type="text/javascript" src="lib/leaflet/leaflet.markercluster-src.js"></script>
+        <script type="text/javascript" src="lib/leaflet/leaflet.js"></script>
+        <script type="text/javascript" src="lib/L.Control.Locate.js"></script>
+<!--        <script src="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol/dist/L.Control.Locate.min.js" charset="utf-8"></script>-->
+            
+        <!--is this the right scrip?-->
+        <script type="text/javascript" src="lib/leaflet.draw.js"></script> <!-- Leaflet Draw JS -->
+        <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script> <!-- jQueryUI v1.11.4 JS --
+        <!-- latest version of standalone mapzen.js-->
+<!--        <script src="https://mapzen.com/js/mapzen.standalone.js"></script>-->
+        <!--Always load your .JS file last-->
+		<script type="text/javascript" src="js/main.js"></script>
+	</body>
+</html>
