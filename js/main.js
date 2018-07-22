@@ -297,7 +297,7 @@ var parkIcon = L.icon({
 
     iconSize:     [35, 30], // size of the icon
     iconAnchor:   [17, 30], // point of the icon which will correspond to marker's location    
-    popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+    popupAnchor:  [0, -30] // point from which the popup should open relative to the iconAnchor
 });
 
 // Get CARTO selection as GeoJSON and Add to Map
